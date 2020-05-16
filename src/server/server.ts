@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 
 export default class Server {
     private static instance: Server;
@@ -16,5 +17,10 @@ export default class Server {
     }
     public start( callback: () => void ) {
         this.app.listen(this.port, callback);
+        this.publicFolder();
+    }
+    private publicFolder () {
+        const publicPath = path.resolve(__dirname, '../public');
+        this.app.use(express.static(publicPath));
     }
 }
